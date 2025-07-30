@@ -18,13 +18,15 @@ FROM
 Rather than * to select all columns, choose the columns you want
 */
 SELECT
-    p.PatientId
-    ,p.Hospital
-    ,p.Ward
-    ,p.AdmittedDate
-    ,p.Dischargedate
+    ps.PatientId
+    ,ps.Hospital
+    ,ps.Ward
+    ,ps.AdmittedDate
+    ,ps.Dischargedate
 FROM
-    PatientStay p;
+    PatientStay ps
+WHERE
+    ps.Hospital = 'Pruh';
  
 /*
 Using a table alias (ps in the example below) is good practice and helps in a few ways
@@ -43,6 +45,7 @@ FROM
 Filter rows  with the WHERE clause
 Note: we can also AND and OR clauses
 */
+
 SELECT
     ps.PatientId
     , ps.AdmittedDate
@@ -50,8 +53,13 @@ SELECT
     , ps.Ward
     , ps.Tariff
 FROM
-    PatientStay ps;
- 
+    PatientStay ps
+ WHERE ps.Hospital IN('kingston','pruh') 
+ AND PS.Ward LIKE '%Surgery'
+ AND ps.AdmittedDate >= '2024-02-27' AND ps.AdmittedDate<='2024-03-01'
+ ORDER BY PS.AdmittedDate DESC, 
+          PS.Ward
+
 /*
 some alternative WHERE clauses.  Try these out
  
