@@ -1,0 +1,59 @@
+--SELECT * FROM DimHospitalbad;
+
+--SELECT * FROM PatientStay;
+
+SELECT
+    h.Hospital
+    ,h.HospitalType
+    ,ps.AdmittedDate
+    ,ps.Dischargedate
+    ,ps.PatientId
+    ,ps.Hospital
+FROM
+    DimHospitalBad h FULL OUTER JOIN PatientStay ps ON h.Hospital=ps.Hospital
+
+
+--lIST PATIENTS IN PRUH
+SELECT
+    h.Hospital
+    ,h.HospitalType
+    ,ps.AdmittedDate
+    ,ps.Dischargedate
+    ,ps.PatientId
+    ,ps.Hospital
+FROM
+    DimHospitalBad h FULL OUTER JOIN PatientStay ps ON h.Hospital=ps.Hospital
+WHERE
+    h.Hospital = 'PRUH'
+ORDER BY
+    ps.AdmittedDate DESC;
+
+        SELECT
+        h.Hospital,
+        h.HospitalType,
+        ps.AdmittedDate,
+        ps.Dischargedate,
+        ps.PatientId,
+        ps.Hospital
+    FROM
+        DimHospitalBad h
+        INNER JOIN PatientStay ps ON h.Hospital = ps.Hospital
+    WHERE
+        h.Hospital IN ('PRUH', 'OXLEAS')
+    ORDER
+
+       SELECT
+    h.Hospital,
+    h.HospitalType,
+    ps.AdmittedDate,
+    ps.Dischargedate,
+    ps.PatientId,
+    ps.Hospital
+FROM
+    DimHospitalBad h
+    INNER JOIN PatientStay ps ON h.Hospital = ps.Hospital
+WHERE
+    h.Hospital IN ('PRUH', 'OXLEAS')
+    AND MONTH(ps.AdmittedDate) = 3
+ORDER BY
+    ps.AdmittedDate DESC;

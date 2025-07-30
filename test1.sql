@@ -49,6 +49,10 @@ Note: we can also AND and OR clauses
 SELECT
     ps.PatientId
     , ps.AdmittedDate
+    , ps.Dischargedate
+    , DATEADD(WEEK,-2,ps.AdmittedDate) as REMINDERDATE
+    , DATEADD(MONTH,3,ps.Dischargedate) as APPOINTMENTDATE
+    , DATEDIFF(DAY,AdmittedDate,Dischargedate)  AS DaysInHospital
     , ps.Hospital
     , ps.Ward
     , ps.Tariff
@@ -56,9 +60,20 @@ FROM
     PatientStay ps
  WHERE ps.Hospital IN('kingston','pruh') 
  AND PS.Ward LIKE '%Surgery'
- AND ps.AdmittedDate >= '2024-02-27' AND ps.AdmittedDate<='2024-03-01'
+ AND ps.AdmittedDate BETWEEN DATEFROMPARTS(2024,02,26)  AND DATEFROMPARTS(2024,03,01)
  ORDER BY PS.AdmittedDate DESC, 
           PS.Ward
+
+SELECT 
+PS.Hospital
+, COUNT(*) AS NumberOfPatients
+, SUM(PS.Tariff) AS TotalTariff
+, AVG (ps.Tariff) AS AverageTariff
+FROM PatientStay ps 
+GROUP BY ps.Hospital
+ORDER   BY NumberOfPatients DESC
+
+SELECT DATEFROMPARTS(2025,07,30) as TheDate
 
 /*
 some alternative WHERE clauses.  Try these out
@@ -219,7 +234,7 @@ FROM
 JOIN DimHospital h ON
     ps.Hospital = h.Hospital;
  
-SQL Server DATEADD() Function
+/*SQL Server DATEADD() Function
 Well organized and easy to understand Web building tutorials with lots of examples of how to use HTML, CSS, JavaScript, SQL, Python, PHP, Bootstrap, Java, XML and more.
  
 Ok thank you!
